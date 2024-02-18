@@ -19,4 +19,4 @@ const findUser = () => {
   );
       
 };
-export default appAdmin;
+export default findUser;
