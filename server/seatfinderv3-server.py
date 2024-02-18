@@ -1,31 +1,42 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import mysql.connector
+import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, methods=["GET", "POST", "OPTIONS"])
 
-# Establish a MySQL database connection
-db_connection = mysql.connector.connect(
-    host="107.180.1.16",
-    port="3306",
-    user="spring2024Cteam9",
-    password="spring2024Cteam9",
-    database="spring2024Cteam9"
-)
-db_cursor = db_connection.cursor()
+# Use environment variables for database configuration
+DB_HOST = os.environ.get("DB_HOST", "127.0.0.1")
+DB_PORT = os.environ.get("DB_PORT", "3306")
+DB_USER = os.environ.get("DB_USER", "spring2024Cteam9")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "spring2024Cteam9")
+DB_DATABASE = os.environ.get("DB_DATABASE", "spring2024Cteam9")
 
-@app.route('/api/data', methods=['GET'])
-def get_data():
-    print('Received GET request for /api/data')
-    return jsonify({"example": "This is data from the backend"})
+def execute_sql_command(sql, params=None):
+    db_connection = mysql.connector.connect(
+        host=DB_HOST,
+        port=DB_PORT,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        database=DB_DATABASE
+    )
+    db_cursor = db_connection.cursor()
 
-@app.route('/api/save', methods=['POST'])
-def save_data():
-    print('Received POST request for /api/save')
-    data = request.get_json()
-    print('Received data:', data)
-    return jsonify({"message": "Data saved successfully"})
+    try:
+        if params is not None:
+            db_cursor.execute(sql, params)
+        else:
+            db_cursor.execute(sql)
+        db_connection.commit()
+        return True
+    except Exception as e:
+        print(f'Error executing SQL command: {e}')
+        db_connection.rollback()
+        return False
+    finally:
+        db_cursor.close()
+        db_connection.close()
 
 @app.route('/api/create-account', methods=['POST'])
 def create_account():
@@ -45,39 +56,33 @@ def create_account():
 
 def insert_user_account(username, email, password):
     # Insert the new user account into the database
-    try:
-        db_cursor.execute('INSERT INTO users (username, email, password) VALUES (%s, %s, %s)', (username, email, password))
-        db_connection.commit()
-        return True
-    except Exception as e:
-        print('Error inserting user account:', e)
-        db_connection.rollback()
-        return False
+    sql = 'INSERT INTO users (username, email, password) VALUES (%s, %s, %s)'
+    params = (username, email, password)
+    return execute_sql_command(sql, params)
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    print('Received POST request for /api/login')
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
 
-    # Authenticate user by checking the database
+    # Check user credentials
     user_exists = check_user_credentials(username, password)
 
     if user_exists:
-        return jsonify({"message": "Login successful"})
+        response = jsonify({"message": "Login successful"})
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+        return response
     else:
         return jsonify({"error": "Invalid credentials"}), 401
 
 def check_user_credentials(username, password):
     # Check if the provided username and password match a record in the database
-    db_cursor.execute('SELECT * FROM users WHERE username=%s AND password=%s', (username, password))
-    user_record = db_cursor.fetchone()
+    sql = 'SELECT * FROM users WHERE username=%s AND password=%s'
+    params = (username, password)
+    user_record = execute_sql_command(sql, params)
 
-    if user_record:
-        return True
-    else:
-        return False
+    return user_record is not None
 
 if __name__ == '__main__':
     app.run(debug=True)

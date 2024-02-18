@@ -13,7 +13,12 @@ const appHome = () => {
           <h1 style={{ textAlign: 'center', fontSize: '100px' }}>ASU Seat-Finder</h1>
           <div style= {{ textAlign: 'center' }}>
           <button style={{ width:'200px', borderRadius: '8px', padding: '10px' }}>Account Details</button>
-          
+          </div>
+          <div>
+          <button style={{ width:'200px', borderRadius: '8px', padding: '10px' }}>Class Catalog</button>
+          </div>
+          <div>
+          <button style={{ width:'200px', borderRadius: '8px', padding: '10px' }}>Notification Center</button>
           </div>
           
         </div>
