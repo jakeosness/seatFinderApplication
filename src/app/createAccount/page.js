@@ -1,3 +1,5 @@
+//Create Account Page
+
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -34,24 +36,36 @@ const createAccount = () => {
   };
 
     return (
-        <div>
-          <h1>Create an Account</h1>
-          <div>
-            <label>Username:</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-          </div>
-          <div>
-            <label>Email:</label>
-            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <div>
-            <button onClick={handleCreateAccount}>Create Account</button>
-          </div>
-        </div>
+      <div>
+
+      <div class="header">
+        <h1>SeatFinder</h1>
+      </div>
+
+        <br></br>
+        
+      <h1 class="find">Create Account</h1>
+
+        <hr></hr>
+
+      <h3 class="sub-header">Welcome!<br></br>Enter info below</h3>
+
+
+      <input class="input" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required></input>
+        <br></br>
+
+      <input class="input" type="text" placeholder="School Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+        <br></br>
+
+      <input class="input" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+        <br></br>
+       
+      <button class="buttonbasic" onClick={handleCreateAccount}> Create Account </button>
+
+      <div class="footer">
+        <p>&copy; 2024 SeatFinder. All rights reserved.</p>
+      </div>
+      </div>
       );
     };
 export default createAccount;

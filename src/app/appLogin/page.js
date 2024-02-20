@@ -1,3 +1,5 @@
+//Login Page
+
 "use client"
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -26,31 +28,34 @@ const Login = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center', fontSize: '100px' }}>ASU Seat-Finder</h1>
-
-      <div style={{ textAlign: 'center', fontSize: '30px' }}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+      <div class="header">
+      <h1>SeatFinder</h1>
       </div>
 
-      <div style={{ textAlign: 'center', fontSize: '30px' }}>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <div style= {{ textAlign: 'center' }}>
-      <button style={{ width:'200px', borderRadius: '8px', padding: '10px' }} onClick={handleLogin}>Login</button>
-      </div>
-      
+    <br></br>
+
+    <h1 class="find">Login</h1>
+
+    <hr></hr>
+
+    <h3 class="sub-header">Welcome back!<br></br>Enter login info below</h3>
+
+    <input id="username" class="input" type="text" placeholder="username" value={username}
+          onChange={(e) => setUsername(e.target.value)} required></input>
+
+    <br></br>
+
+    <input id="password" class="input" type="password" placeholder="password" value={password}
+          onChange={(e) => setPassword(e.target.value)} required></input>
+
+    <br></br>
+
+    <button class="buttonbasic" onClick={handleLogin}> Login </button>  
+   
+    <div class="footer">
+    <p>&copy; 2024 SeatFinder. All rights reserved.</p>
+    </div>
+
     </div>
   );
 };
