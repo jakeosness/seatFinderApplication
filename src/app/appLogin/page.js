@@ -10,7 +10,7 @@ const Login = () => {
     const router = useRouter();
   
     const handleLogin = () => {
-      axios.post('http://localhost:5000/api/login', { username, password })
+      axios.post('http://localhost:3000/appLogin', { username, password })
         .then(response => {
           console.log('Login successful:', response.data);
           // Perform additional actions, e.g., redirect the user
