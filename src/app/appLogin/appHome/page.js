@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 const appHome = () => {
     const router = useRouter();
 
-    // const profileRoute = () => {
-    //     router.push('/profile')
-    // };
+    const profileRoute = () => {
+        router.push('/profile')
+    };
   return (
     <div>
     <div class="header">
