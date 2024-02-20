@@ -12,7 +12,7 @@ const createAccount = () => {
 
     const handleCreateAccount = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/api/create-account', {
+            const response = await axios.post('http://localhost:3000/createAccount', {
               username,
               email,
               password,
@@ -22,10 +22,16 @@ const createAccount = () => {
             // You can handle the response as needed, e.g., show a success message, redirect, etc.
             router.push('/appLogin')
         } catch (error) {
+          if (error.response && error.response.data) {
+            // If the response exists and has a 'data' property, log it
             console.error('Error creating account:', error.response.data);
             // Handle the error, e.g., show an error message to the user
+          } else {
+            // If 'error.response' is undefined or doesn't have a 'data' property
+            console.error('Unexpected error:', error);
         }
-    };
+    }
+  };
 
     return (
         <div>
