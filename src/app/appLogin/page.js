@@ -16,7 +16,7 @@ const Login = () => {
         .then(response => {
           console.log('Login successful:', response.data);
           // Perform additional actions, e.g., redirect the user
-          router.push('/appLogin/appHome');
+          router.push('/appHome');
         })
         .catch(error => {
           console.error('Login failed:', error.response.data);

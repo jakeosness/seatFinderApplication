@@ -1,3 +1,4 @@
+//Home
 "use client"
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -13,6 +14,9 @@ const startPage = () => {
    const handleCreateAccount = () => {
     router.push('/createAccount')
    }
+   const profileRoute = () => {
+    router.push('/profile')
+   };
 
   return (
     <div>
