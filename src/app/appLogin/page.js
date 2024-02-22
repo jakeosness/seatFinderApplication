@@ -12,47 +12,56 @@ const Login = () => {
     const router = useRouter();
   
     const handleLogin = () => {
-      axios.post('http://localhost:3000/appLogin', { username, password })
+      axios.post('http://localhost:5000/api/login', { username, password })
         .then(response => {
           console.log('Login successful:', response.data);
           // Perform additional actions, e.g., redirect the user
-          router.push('/appHome');
+          router.push('/admin');
         })
         .catch(error => {
-          console.error('Login failed:', error.response.data);
+          if (error.response) {
+            // The server responded with a status code other than 2xx
+            console.error('Login failed:', error.response.data);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received:', error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error setting up the request:', error.message);
+          }
           // Handle login failure, e.g., display an error message
         });
     };
-  
+    
   
 
   return (
     <div>
-      <div class="header">
+      <div className="header">
       <h1>SeatFinder</h1>
       </div>
 
     <br></br>
 
-    <h1 class="find">Login</h1>
+    <h1 className="find">Login</h1>
 
     <hr></hr>
 
-    <h3 class="sub-header">Welcome back!<br></br>Enter login info below</h3>
+    <h3 className="sub-header">Welcome back!<br></br>Enter login info below</h3>
 
-    <input id="username" class="input" type="text" placeholder="username" value={username}
+    <input id="username" className="input" type="text" placeholder="username" value={username}
           onChange={(e) => setUsername(e.target.value)} required></input>
 
     <br></br>
 
-    <input id="password" class="input" type="password" placeholder="password" value={password}
+    <input id="password" className="input" type="password" placeholder="password" value={password}
           onChange={(e) => setPassword(e.target.value)} required></input>
 
     <br></br>
 
-    <button class="buttonbasic" onClick={handleLogin}> Login </button>  
+    <button className="buttonbasic" onClick={handleLogin}> Login </button>  
    
-    <div class="footer">
+    <div className="footer">
     <p>&copy; 2024 SeatFinder. All rights reserved.</p>
     </div>
 

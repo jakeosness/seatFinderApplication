@@ -38,31 +38,31 @@ const createAccount = () => {
     return (
       <div>
 
-      <div class="header">
+      <div className="header">
         <h1>SeatFinder</h1>
       </div>
 
         <br></br>
         
-      <h1 class="find">Create Account</h1>
+      <h1 className="find">Create Account</h1>
 
         <hr></hr>
 
-      <h3 class="sub-header">Welcome!<br></br>Enter info below</h3>
+      <h3 className="sub-header">Welcome!<br></br>Enter info below</h3>
 
 
-      <input class="input" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required></input>
+      <input className="input" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required></input>
         <br></br>
 
-      <input class="input" type="text" placeholder="School Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+      <input className="input" type="text" placeholder="School Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
         <br></br>
 
-      <input class="input" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+      <input className="input" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
         <br></br>
        
-      <button class="buttonbasic" onClick={handleCreateAccount}> Create Account </button>
+      <button className="buttonbasic" onClick={handleCreateAccount}> Create Account </button>
 
-      <div class="footer">
+      <div className="footer">
         <p>&copy; 2024 SeatFinder. All rights reserved.</p>
       </div>
       </div>

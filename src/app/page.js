@@ -20,19 +20,19 @@ const startPage = () => {
 
   return (
     <div>
-    <div class="header">
+    <div className="header">
     <h1>SeatFinder</h1>
     </div>
 
     <br></br>
-    <h1 class="find">Welcome</h1>
+    <h1 className="find">Welcome</h1>
     <hr></hr>
-    <h3 class="sub-header">Would you like to login or create an account?</h3>
+    <h3 className="sub-header">Would you like to login or create an account?</h3>
     
-    <button class="button1" onClick={handleAppLogin}>Login</button>
-    <button class="button1" onClick={handleCreateAccount}>Create Account</button>
+    <button className="button1" onClick={handleAppLogin}>Login</button>
+    <button className="button1" onClick={handleCreateAccount}>Create Account</button>
     
-    <div class="footer">
+    <div className="footer">
     <p>&copy; 2024 SeatFinder. All rights reserved.</p>
     </div>
     

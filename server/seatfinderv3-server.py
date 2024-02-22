@@ -3,11 +3,12 @@ from flask_cors import CORS
 import mysql.connector
 import os
 
+
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}}, methods=["GET", "POST", "OPTIONS"])
+CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
 
 # Use environment variables for database configuration
-DB_HOST = os.environ.get("DB_HOST", "127.0.0.1")
+DB_HOST = os.environ.get("DB_HOST", "107.180.1.16")
 DB_PORT = os.environ.get("DB_PORT", "3306")
 DB_USER = os.environ.get("DB_USER", "spring2024Cteam9")
 DB_PASSWORD = os.environ.get("DB_PASSWORD", "spring2024Cteam9")
@@ -25,15 +26,19 @@ def execute_sql_command(sql, params=None):
 
     try:
         if params is not None:
+            print(f"Executing SQL with parameters: {params}")
             db_cursor.execute(sql, params)
         else:
+            print("Executing SQL without parameters")
             db_cursor.execute(sql)
+
+        result_set = db_cursor.fetchall()
         db_connection.commit()
-        return True
+        return result_set
     except Exception as e:
         print(f'Error executing SQL command: {e}')
         db_connection.rollback()
-        return False
+        return None
     finally:
         db_cursor.close()
         db_connection.close()
@@ -80,9 +85,15 @@ def check_user_credentials(username, password):
     # Check if the provided username and password match a record in the database
     sql = 'SELECT * FROM users WHERE username=%s AND password=%s'
     params = (username, password)
-    user_record = execute_sql_command(sql, params)
 
-    return user_record is not None
+    print(f"SQL Query: {sql}")
+    print(f"SQL Parameters: {params}")
+
+    user_records = execute_sql_command(sql, params)
+
+    print(f"User Record: {user_records}")
+
+    return len(user_records) > 0
 
 if __name__ == '__main__':
     app.run(debug=True)
