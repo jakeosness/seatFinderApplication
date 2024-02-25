@@ -5,6 +5,9 @@ import './findUser.css';
 
 const admin = () => {
   const router = useRouter();
+  const homeRoute = () => {
+    router.push('/admin')
+  }; 
 
   return (
     <div>

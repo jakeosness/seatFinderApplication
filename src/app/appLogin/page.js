@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
   
     const handleLogin = () => {
@@ -16,12 +17,13 @@ const Login = () => {
         .then(response => {
           console.log('Login successful:', response.data);
           // Perform additional actions, e.g., redirect the user
-          router.push('/admin');
+          router.push('/userProfile');
         })
         .catch(error => {
           if (error.response) {
             // The server responded with a status code other than 2xx
             console.error('Login failed:', error.response.data);
+            setErrorMessage('Incorrect username or password');
           } else if (error.request) {
             // The request was made but no response was received
             console.error('No response received:', error.request);
@@ -48,6 +50,8 @@ const Login = () => {
     <hr></hr>
 
     <h3 className="sub-header">Welcome back!<br></br>Enter login info below</h3>
+
+    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
     <input id="username" className="input" type="text" placeholder="username" value={username}
           onChange={(e) => setUsername(e.target.value)} required></input>
